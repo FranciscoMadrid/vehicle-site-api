@@ -3,9 +3,43 @@ import DB_Query from "../helper/database_query.js"
 const table = 'vehicle';
 const primaryKey = 'id'
 
-export const getAll = async () => {
-  const sql = `SELECT * FROM ${table}`
-  return await DB_Query.query(sql);
+export const getAll = async (filters = {}) => {
+  const {
+    id,
+    brand,
+    model,
+    plate,
+    startDate,
+    endDate
+  } = filters;
+  let sql = `SELECT * FROM ${table} WHERE 1 = 1`;
+  const params = [];
+
+  if(id){
+    sql += ` AND id = ?`;
+    params.push(id)
+  }
+  if(brand){
+    sql += ` AND brand = ?`;
+    params.push(brand)
+  }
+  if(model){
+    sql += ` AND model LIKE ?`;
+    params.push(`${model}%`)
+  }
+  if(plate){
+    sql += ` AND plate LIKE ?`;
+    params.push(`${plate}%`)
+  }
+  if (startDate) {
+    sql += ` AND L.created_at >= ?`;
+    params.push(startDate);
+  }
+  if (endDate) {
+    sql += ` AND L.created_at <= ?`;
+    params.push(endDate);
+  }
+  return await DB_Query.query(sql, params);
 }
 
 export const getById = async (id) => {

@@ -2,7 +2,23 @@ import * as Vehicle from '../models/vehicle.js';
 
 export const getAll = async(req, res) => {
   try {
-    const record = await Vehicle.getAll();
+    const {
+      id,
+      brand,
+      model,
+      plate,
+      startDate,
+      endDate
+    } = req.query;
+
+    const record = await Vehicle.getAll({
+      id,
+      brand,
+      model,
+      plate,
+      startDate,
+      endDate
+    });
     res.json(record)
   } catch (error) {
     res.status(500).json({ error: error.message });
