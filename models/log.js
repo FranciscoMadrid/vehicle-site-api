@@ -28,12 +28,12 @@ export const getAll = async (filters = {}) => {
     params.push(vehicleId)
   }
   if(brand) {
-    sql += ` AND V.brand = ?`;
-    params.push(brand)
+    sql += ` AND V.brand LIKE ?`;
+    params.push(`${brand}%`)
   }
   if(model) {
-    sql += ` AND V.model = ?`
-    params.push(model)
+    sql += ` AND V.model LIKE ?`
+    params.push(`${model}%`)
   }
   if(plate) {
     sql += ` AND V.plate LIKE ?`
