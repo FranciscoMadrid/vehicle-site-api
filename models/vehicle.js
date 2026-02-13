@@ -20,8 +20,8 @@ export const getAll = async (filters = {}) => {
     params.push(id)
   }
   if(brand){
-    sql += ` AND brand = ?`;
-    params.push(brand)
+    sql += ` AND brand LIKE ?`;
+    params.push(`${brand}%`)
   }
   if(model){
     sql += ` AND model LIKE ?`;
@@ -32,11 +32,11 @@ export const getAll = async (filters = {}) => {
     params.push(`${plate}%`)
   }
   if (startDate) {
-    sql += ` AND L.created_at >= ?`;
+    sql += ` AND created_at >= ?`;
     params.push(startDate);
   }
   if (endDate) {
-    sql += ` AND L.created_at <= ?`;
+    sql += ` AND created_at <= ?`;
     params.push(endDate);
   }
   return await DB_Query.query(sql, params);
