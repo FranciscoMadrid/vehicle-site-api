@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import VehicleRoute from './routes/vehicle.route.js';
 import LogRoute from './routes/log.route.js';
+import ModelRoute from "./routes/model.route.js"
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use('/api/vehicle', VehicleRoute);
 app.use('/api/log', LogRoute);
+app.use('/api/model', ModelRoute)
 
 const PORT = process.env.PORT || 3000; 
 
