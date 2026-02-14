@@ -1,16 +1,8 @@
-import * as Vehicle from '../models/vehicle.js';
+import * as Brand from '../models/brand.js';
 
 export const getAll = async(req, res) => {
   try {
-    const filters = {
-      id: req.query.id,
-      brand: req.query.brand,
-      model: req.query.model,
-      plate: req.query.plate,
-      startDate: req.query.startDate,
-      endDate: req.query.endDate,
-    }
-    const record = await Vehicle.getAll(filters);
+    const record = await Brand.getAll();
     res.json(record)
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -19,7 +11,7 @@ export const getAll = async(req, res) => {
 
 export const getById = async(req, res) => {
   try {
-    const record = await Vehicle.getById(req.params.id);
+    const record = await Brand.getById(req.params.id);
 
     if(!record)
     {
@@ -34,7 +26,7 @@ export const getById = async(req, res) => {
 
 export const create = async (req, res) => {
   try {
-    const record = await Vehicle.create(req.body);
+    const record = await Brand.create(req.body);
     res.status(201).json(record);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -46,7 +38,7 @@ export const update = async(req, res) => {
   const updateData = req.body;
 
   try {
-    const affectedRows = await Vehicle.update(id, updateData);
+    const affectedRows = await Brand.update(id, updateData);
 
     if(affectedRows === 0)
     {
@@ -63,7 +55,7 @@ export const deleteById = async(req, res) => {
   const userId = req.params.id;
 
   try {
-    const affectedRows = await Vehicle.deleteById(userId);
+    const affectedRows = await Brand.deleteById(userId);
 
     if(affectedRows === 0)
     {
