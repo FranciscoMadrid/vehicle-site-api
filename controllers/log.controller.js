@@ -2,29 +2,20 @@ import * as Log from '../models/log.js';
 
 export const getAll = async(req, res) => {
   try {
-    const {
-      vehicleId, 
-      brand,
-      model,
-      plate, 
-      mileageMin, 
-      mileageMax, 
-      startDate, 
-      endDate, 
-      driver_name
-    } = req.query;
+    const filter = {
+      id: req.query.id,
+      brand: req.query.brand,
+      model: req.query.model,
+      plate: req.query.plate,
+      driver_name: req.query.driver_name,
+      type:  req.query.type,
+      minMileage: req.query.minMileage,
+      maxMileage: req.query.maxMileage,
+      startDate: req.query.startDate,
+      endDate: req.query.endDate
+    }
 
-    const record = await Log.getAll({
-      vehicleId: vehicleId, 
-      brand: brand,
-      model: model,
-      plate: plate, 
-      mileageMin: mileageMin, 
-      mileageMax: mileageMax, 
-      startDate: startDate, 
-      endDate: endDate, 
-      driver_name: driver_name
-    });
+    const record = await Log.getAll(filter);
     res.json(record)
   } catch (error) {
     res.status(500).json({ error: error.message });

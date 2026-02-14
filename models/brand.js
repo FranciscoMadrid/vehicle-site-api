@@ -1,47 +1,18 @@
 import DB_Query from "../helper/database_query.js"
 
-const table = 'log';
+const table = 'brand';
 const primaryKey = 'id'
 
 const BASE_SELECT = `
-  SELECT L.id, V.plate, B.brand, M.model, L.type, L.driver_name, L.mileage, L.fk_vehicle_id, L.created_at
-  FROM vehicle AS V 
-  INNER JOIN model AS M ON V.fk_model_id = M.id
-  INNER JOIN brand AS B ON M.fk_brand_id = B.id
-  INNER JOIN log as L ON L.fk_vehicle_id = V.id`;
+  SELECT * FROM ${table}`;
 
-const filterDefinitions = {
-  id: 'AND L.id = ?',
-  brand: 'AND B.brand LIKE ?',
-  model: 'AND M.model LIKE ?',
-  plate: 'AND V.plate LIKE ?',
-  driver_name: 'AND L.driver_name LIKE ?',
-  type: 'AND L.type = ?',
-  minMileage: 'AND L.mileage >= ?',
-  maxMileage: 'AND L.mileage <= ?',
-  startDate: 'AND L.created_at >= ?',
-  endDate: 'AND L.created_at <= ?',
-};
-
-export const getAll = async (filters) => {
-  let sql = `${BASE_SELECT} WHERE 1 = 1`
-  const params = []
-  Object.entries(filters).forEach(([key, value]) => {
-    if(value !== undefined && value !== null && value !== '' && filterDefinitions[key]){
-      sql += ` ${filterDefinitions[key]}`
-      
-      if(filterDefinitions[key].includes('LIKE')){
-        params.push(`${value}%`);
-      } else {
-        params.push(value)
-      }
-    }
-  })
-  return await DB_Query.query(sql, params);
+export const getAll = async () => {
+  const sql = `${BASE_SELECT}`
+  return await DB_Query.query(sql);
 }
 
 export const getById = async (id) => {
-  const sql = `${BASE_SELECT} WHERE L.id = ?`;
+  const sql = `${BASE_SELECT} WHERE id = ?`;
   return await DB_Query.query(sql, [id])
     .then(rows => rows[0]);
 }
