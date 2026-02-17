@@ -42,9 +42,11 @@ The database is designed with the following tables:
 
 ### 🔑 Configuration (Environment Variables)
 
-Create a `.env` file in the server root directory:
+Create a `.env` file in the server root directory with the following variables:
 
 ```env
-PORT=3000
-DATABASE_URL=your_database_connection_string
-FRONTEND_ORIGIN=[https://flowdrive.ffmsdev.com](https://flowdrive.ffmsdev.com)
+PORT=5000
+DB_HOST=your_host_address
+DB_USER=your_username
+DB_PASSWORD=your_password
+DB_NAME=your_database_name
